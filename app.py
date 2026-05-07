@@ -84,8 +84,8 @@
 # # ---------------- LOAD MODEL ----------------
 # @st.cache_resource
 # def load_model():
-#     model  = pickle.load(open(r'D:\churn pred\churn_model.pkl', 'rb'))
-#     scaler = pickle.load(open(r'D:\churn pred\scaler.pkl', 'rb'))
+#     model  = pickle.load(open(r'churn_model.pkl', 'rb'))
+#     scaler = pickle.load(open(r'scaler.pkl', 'rb'))
 #     return model, scaler
 
 # model, scaler = load_model()
