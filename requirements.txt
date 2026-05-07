@@ -1,6 +1,9 @@
 streamlit
-numpy
 pandas
+numpy
 scikit-learn
-matplotlib
 plotly
+streamlit-lottie
+requests
+pyrebase4
+streamlit-option-menu
