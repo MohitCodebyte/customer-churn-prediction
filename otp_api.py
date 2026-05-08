@@ -13,11 +13,11 @@ CORS(app)
 
 import os
 
-account_sid = os.environ.get("AC51bb9b8b4a18e36cd00ac2535e93799e")
+account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
 
-auth_token = os.environ.get("22543ec70cecd32e778dd41ac236e597")
+auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
 
-verify_service_sid = os.environ.get("VA887236c8f24673ab9d390ea8e4ac153f")
+verify_service_sid = os.environ.get("VERIFY_SERVICE_SID")
 
 client = Client(account_sid, auth_token)
 
