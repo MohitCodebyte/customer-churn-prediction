@@ -1,0 +1,122 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import random
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+app = Flask(__name__)
+
+CORS(app)
+
+# -----------------------------
+# EMAIL CONFIG
+# -----------------------------
+
+EMAIL_ADDRESS = "kushwahmitansh@gmail.com"
+
+EMAIL_PASSWORD = "jpsi wrke trzx hdlt"
+
+# -----------------------------
+# STORE OTP
+# -----------------------------
+
+otp_storage = {}
+
+# -----------------------------
+# SEND OTP
+# -----------------------------
+
+@app.route("/send_email_otp", methods=["POST"])
+def send_email_otp():
+
+    data = request.get_json()
+
+    email = data.get("email")
+
+    if not email:
+
+        return jsonify({
+            "success": False,
+            "message": "Email required"
+        })
+
+    otp = str(random.randint(100000, 999999))
+
+    otp_storage[email] = otp
+
+    try:
+
+        msg = MIMEMultipart()
+
+        msg["From"] = EMAIL_ADDRESS
+
+        msg["To"] = email
+
+        msg["Subject"] = "Your OTP Code"
+
+        body = f"Your OTP is: {otp}"
+
+        msg.attach(MIMEText(body, "plain"))
+
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+
+        server.starttls()
+
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+
+        server.send_message(msg)
+
+        server.quit()
+
+        return jsonify({
+            "success": True,
+            "message": "OTP sent successfully"
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "success": False,
+            "message": str(e)
+        })
+
+# -----------------------------
+# VERIFY OTP
+# -----------------------------
+
+@app.route("/verify_email_otp", methods=["POST"])
+def verify_email_otp():
+
+    data = request.get_json()
+
+    email = data.get("email")
+
+    otp = data.get("otp")
+
+    saved_otp = otp_storage.get(email)
+
+    if saved_otp == otp:
+
+        return jsonify({
+            "success": True,
+            "message": "OTP verified"
+        })
+
+    else:
+
+        return jsonify({
+            "success": False,
+            "message": "Invalid OTP"
+        })
+
+# -----------------------------
+# RUN SERVER
+# -----------------------------
+
+if __name__ == "__main__":
+
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
