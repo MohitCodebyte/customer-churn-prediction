@@ -183,10 +183,13 @@ if st.session_state.user is None:
 
             try:
 
-                response = requests.post(
-                    "https://email-otp-churn-pred.onrender.com/send_email_otp",
-                    json={"email": email_otp}
-                )
+                with st.spinner("Sending Email OTP..."):
+
+                    response = requests.post(
+                        "https://email-otp-churn-pred.onrender.com/send_email_otp",
+                        json={"email": email_otp},
+                        timeout=30
+                    )
 
                 data = response.json()
 
@@ -208,12 +211,15 @@ if st.session_state.user is None:
 
             try:
 
-                response = requests.post(
-                    "https://email-otp-churn-pred.onrender.com/verify_email_otp",
+                with st.spinner("Verifying OTP..."):
+
+                    response = requests.post(
+                        "https://email-otp-churn-pred.onrender.com/verify_email_otp",
                     json={
                         "email": email_otp,
                         "otp": email_otp_code
-                    }
+                    },
+                    timeout=30
                 )
 
                 data = response.json()

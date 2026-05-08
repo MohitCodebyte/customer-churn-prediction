@@ -4,6 +4,7 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 app = Flask(__name__)
 
@@ -13,9 +14,9 @@ CORS(app)
 # EMAIL CONFIG
 # -----------------------------
 
-EMAIL_ADDRESS = "kushwahmitansh@gmail.com"
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 
-EMAIL_PASSWORD = "jpsiwrketrzxhdlt"
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
 # -----------------------------
 # STORE OTP
@@ -59,7 +60,7 @@ def send_email_otp():
 
         msg.attach(MIMEText(body, "plain"))
 
-        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server = smtplib.SMTP("smtp-relay.brevo.com", 587)
 
         server.starttls()
 
@@ -113,8 +114,6 @@ def verify_email_otp():
 # -----------------------------
 # RUN SERVER
 # -----------------------------
-
-import os
 
 if __name__ == "__main__":
 
