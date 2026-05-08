@@ -11,11 +11,13 @@ CORS(app)
 # TWILIO CONFIG
 # -----------------------------
 
-account_sid = "AC51bb9b8b4a18e36cd00ac2535e93799e"
+import os
 
-auth_token = "22543ec70cecd32e778dd41ac236e597"
+account_sid = os.environ.get("AC51bb9b8b4a18e36cd00ac2535e93799e")
 
-verify_service_sid = "VA887236c8f24673ab9d390ea8e4ac153f"
+auth_token = os.environ.get("22543ec70cecd32e778dd41ac236e597")
+
+verify_service_sid = os.environ.get("VA887236c8f24673ab9d390ea8e4ac153f")
 
 client = Client(account_sid, auth_token)
 
