@@ -5,9 +5,9 @@ import pandas as pd
 import os
 from streamlit_lottie import st_lottie
 import requests
-import pyrebase
 from streamlit_option_menu import option_menu
 from datetime import datetime
+import pyrebase
 
 firebaseConfig = {
 
@@ -160,6 +160,81 @@ if st.session_state.user is None:
 
                     st.error(f"Server Error: {e}")
     # ---------------- SIGNUP ---------------- #
+
+    st.markdown("---")
+
+    st.markdown("### 📧 Email OTP Login")
+
+    email_otp = st.text_input(
+        "Enter Email",
+        placeholder="example@gmail.com"
+    )
+
+    email_otp_code = st.text_input(
+        "Enter Email OTP",
+        placeholder="6 digit OTP"
+    )
+
+    ecol1, ecol2 = st.columns(2)
+
+    with ecol1:
+
+        if st.button("📩 Send Email OTP"):
+
+            try:
+
+                response = requests.post(
+                    "https://email-otp-churn-pred.onrender.com/send_email_otp",
+                    json={"email": email_otp}
+                )
+
+                data = response.json()
+
+                if data["success"]:
+
+                    st.success("✅ Email OTP Sent")
+
+                else:
+
+                    st.error(data["message"])
+
+            except Exception as e:
+
+                st.error(f"Server Error: {e}")
+
+    with ecol2:
+
+        if st.button("✅ Verify Email OTP"):
+
+            try:
+
+                response = requests.post(
+                    "https://email-otp-churn-pred.onrender.com/verify_email_otp",
+                    json={
+                        "email": email_otp,
+                        "otp": email_otp_code
+                    }
+                )
+
+                data = response.json()
+
+                if data["success"]:
+
+                    st.session_state.user = email_otp
+
+                    st.session_state.email = email_otp
+
+                    st.success("✅ Email Login Successful")
+
+                    st.rerun()
+
+                else:
+
+                    st.error("❌ Invalid Email OTP")
+
+            except Exception as e:
+
+                st.error(f"Server Error: {e}")
 
     if auth_mode == "Signup":
 
