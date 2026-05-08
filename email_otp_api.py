@@ -15,7 +15,7 @@ CORS(app)
 
 EMAIL_ADDRESS = "kushwahmitansh@gmail.com"
 
-EMAIL_PASSWORD = "jpsi wrke trzx hdlt"
+EMAIL_PASSWORD = "jpsiwrketrzxhdlt"
 
 # -----------------------------
 # STORE OTP
@@ -114,9 +114,13 @@ def verify_email_otp():
 # RUN SERVER
 # -----------------------------
 
+import os
+
 if __name__ == "__main__":
+
+    port = int(os.environ.get("PORT", 5000))
 
     app.run(
         host="0.0.0.0",
-        port=5000
+        port=port
     )
