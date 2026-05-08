@@ -91,7 +91,7 @@ if st.session_state.user is None:
 
         phone = st.text_input(
             "Enter Mobile Number",
-            placeholder="9876543210"
+            placeholder="enter here"
         )
 
         otp = st.text_input(
@@ -133,7 +133,7 @@ if st.session_state.user is None:
                 try:
 
                     response = requests.post(
-                        "https://customer-churn-prediction-4-qh3a.onrender.com/send_otp",
+                        "https://customer-churn-prediction-4-qh3a.onrender.com/verify_otp",
                         json={
                             "phone": phone,
                             "otp": otp

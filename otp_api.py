@@ -11,8 +11,6 @@ CORS(app)
 # TWILIO CONFIG
 # -----------------------------
 
-import os
-
 account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
 
 auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
@@ -51,6 +49,7 @@ def send_otp():
                 to=phone,
                 channel="sms",
             )
+        print("Verification Status:", verification.status)
 
         return jsonify({
             "success": True,
