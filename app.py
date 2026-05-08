@@ -108,7 +108,7 @@ if st.session_state.user is None:
                 try:
 
                     response = requests.post(
-                        "http://127.0.0.1:5000/send_otp",
+                        "https://customer-churn-prediction-4-qh3a.onrender.com/send_otp",
                         json={"phone": phone}
                     )
 
@@ -133,7 +133,7 @@ if st.session_state.user is None:
                 try:
 
                     response = requests.post(
-                        "http://127.0.0.1:5000/verify_otp",
+                        "https://customer-churn-prediction-4-qh3a.onrender.com/send_otp",
                         json={
                             "phone": phone,
                             "otp": otp
