@@ -50,7 +50,7 @@ def send_email_otp():
 
         msg = MIMEMultipart()
 
-        msg["From"] = EMAIL_ADDRESS
+        msg["From"] = "kushwahmitansh@gmail.com"
 
         msg["To"] = email
 
