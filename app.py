@@ -188,7 +188,7 @@ if st.session_state.user is None:
                     response = requests.post(
                         "https://email-otp-churn-pred.onrender.com/send_email_otp",
                         json={"email": email_otp},
-                        timeout=60
+                        timeout=120
                     )
 
                     response.raise_for_status()
