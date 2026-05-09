@@ -188,22 +188,32 @@ if st.session_state.user is None:
                     response = requests.post(
                         "https://email-otp-churn-pred.onrender.com/send_email_otp",
                         json={"email": email_otp},
-                        timeout=30
+                        timeout=60
                     )
 
-                data = response.json()
+                    response.raise_for_status()
 
-                if data["success"]:
+                    data = response.json()
 
-                    st.success("✅ Email OTP Sent")
+                    if data.get("success"):
 
-                else:
+                        st.success("✅ Email OTP Sent Successfully")
 
-                    st.error(data["message"])
+                    else:
+
+                        st.error(data.get("message", "Unknown Error"))
+
+            except requests.exceptions.Timeout:
+
+                st.error("⏳ Server took too long to respond. Try again.")
+
+            except requests.exceptions.RequestException as e:
+
+                st.error(f"🌐 Network Error: {e}")
 
             except Exception as e:
 
-                st.error(f"Server Error: {e}")
+                st.error(f"❌ Server Error: {e}")
 
     with ecol2:
 

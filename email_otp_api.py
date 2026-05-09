@@ -50,7 +50,7 @@ def send_email_otp():
 
         msg = MIMEMultipart()
 
-        msg["From"] = "kushwahmitansh@gmail.com"
+        msg["From"] = "Mitansh <kushwahmitansh@gmail.com>"
 
         msg["To"] = email
 
@@ -62,11 +62,17 @@ def send_email_otp():
 
         server = smtplib.SMTP("smtp-relay.brevo.com", 587)
 
+        server.ehlo()
+
         server.starttls()
+
+        server.ehlo()
 
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
         server.send_message(msg)
+
+        print("EMAIL SENT TO:", email)
 
         server.quit()
 
