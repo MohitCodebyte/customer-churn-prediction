@@ -180,38 +180,35 @@ if st.session_state.user is None:
     with ecol1:
 
         if st.button("📩 Send Email OTP"):
-
             try:
+                # Step 1: Pehle backend ko ping karo (wake up)
+                with st.spinner("⏳ Server starting up (first time ~30s lag sakta hai)..."):
+                    try:
+                        ping_response = requests.get(
+                            "https://email-otp-churn-pred.onrender.com/ping",
+                            timeout=40  # wake-up ke liye zyada time
+                        )
+                    except:
+                        pass  # ping fail ho toh bhi OTP try karo
 
-                with st.spinner("Sending Email OTP..."):
-
+                # Step 2: Ab OTP bhejo
+                with st.spinner("📧 OTP bhej rahe hain..."):
                     response = requests.post(
                         "https://email-otp-churn-pred.onrender.com/send_email_otp",
                         json={"email": email_otp},
-                        timeout=120
+                        timeout=60  # 120 se 60 kar do, ping ne already wake kiya
                     )
-
                     data = response.json()
-
                     if data.get("success"):
-
-                        st.success("✅ Email OTP Sent Successfully")
-
+                        st.success("✅ Email OTP Sent Successfully!")
+                        st.info("📬 Spam folder bhi check karo")
                     else:
-
                         st.error(data.get("message", "Unknown Error"))
 
             except requests.exceptions.Timeout:
-
-                st.error("⏳ Server took too long to respond. Try again.")
-
+                st.warning("⏳ Server abhi bhi start ho raha hai. 15 seconds baad dobara try karo.")
             except requests.exceptions.RequestException as e:
-
                 st.error(f"🌐 Network Error: {e}")
-
-            except Exception as e:
-
-                st.error(f"❌ Server Error: {e}")
 
     with ecol2:
 

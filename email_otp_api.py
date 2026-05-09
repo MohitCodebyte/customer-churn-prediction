@@ -28,6 +28,11 @@ otp_storage = {}
 # SEND OTP
 # -----------------------------
 
+# Render cold start ke liye ping endpoint
+@app.route("/ping", methods=["GET"])
+def ping():
+    return jsonify({"status": "awake", "message": "Server is running"})
+
 @app.route("/send_email_otp", methods=["POST"])
 def send_email_otp():
 
