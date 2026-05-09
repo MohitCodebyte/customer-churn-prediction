@@ -65,19 +65,13 @@ def send_email_otp():
 
         msg.attach(MIMEText(body, "plain"))
 
-        server = smtplib.SMTP_SSL(
-            "smtp-relay.brevo.com",
-            465,
-            timeout=10
-        )
-
+        server = smtplib.SMTP("smtp-relay.brevo.com", 587, timeout=10)
+        server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-
         server.send_message(msg)
-
-        print("EMAIL SENT TO:", email)
-
         server.quit()
+        
+        
 
         return jsonify({
             "success": True,

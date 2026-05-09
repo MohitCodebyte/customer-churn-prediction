@@ -186,7 +186,7 @@ if st.session_state.user is None:
                     try:
                         ping_response = requests.get(
                             "https://email-otp-churn-pred.onrender.com/ping",
-                            timeout=40  # wake-up ke liye zyada time
+                            timeout=180  # wake-up ke liye zyada time
                         )
                     except:
                         pass  # ping fail ho toh bhi OTP try karo
@@ -196,7 +196,7 @@ if st.session_state.user is None:
                     response = requests.post(
                         "https://email-otp-churn-pred.onrender.com/send_email_otp",
                         json={"email": email_otp},
-                        timeout=60  # 120 se 60 kar do, ping ne already wake kiya
+                        timeout=180  # 120 se 60 kar do, ping ne already wake kiya
                     )
                     data = response.json()
                     if data.get("success"):
