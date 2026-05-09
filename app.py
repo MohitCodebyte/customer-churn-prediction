@@ -191,8 +191,6 @@ if st.session_state.user is None:
                         timeout=120
                     )
 
-                    response.raise_for_status()
-
                     data = response.json()
 
                     if data.get("success"):
@@ -225,28 +223,28 @@ if st.session_state.user is None:
 
                     response = requests.post(
                         "https://email-otp-churn-pred.onrender.com/verify_email_otp",
-                    json={
-                        "email": email_otp,
-                        "otp": email_otp_code
-                    },
-                    timeout=30
-                )
+                        json={
+                            "email": email_otp,
+                            "otp": email_otp_code
+                        },
+                        timeout=30
+                    )
 
-                data = response.json()
+                    data = response.json()
 
-                if data["success"]:
+                    if data["success"]:
 
-                    st.session_state.user = email_otp
+                        st.session_state.user = email_otp
 
-                    st.session_state.email = email_otp
+                        st.session_state.email = email_otp
 
-                    st.success("✅ Email Login Successful")
+                        st.success("✅ Email Login Successful")
 
-                    st.rerun()
+                        st.rerun()
 
-                else:
+                    else:
 
-                    st.error("❌ Invalid Email OTP")
+                        st.error("❌ Invalid Email OTP")
 
             except Exception as e:
 
